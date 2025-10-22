@@ -1,0 +1,563 @@
+PROGRAM  1 
+<html>   
+<body> 
+<h4>PHP program which adds up columns and rows of a given table</h4>  
+ 
+<form method="post">   
+Enter the number of rows    : <input type="number" name="m"><br><br> 
+Enter the number of columns : <input type="number" name="n"><br><br> 
+ <input  type="submit" name="submit" value="Submit">  
+</form> 
+ 
+<?php 
+   $a=array(array());  
+   if(isset($_POST['submit']))   
+   {   
+      $m = $_POST['m'];   
+      $n = $_POST['n'];   
+      $x = 1; 
+      for ($i = 0; $i < $m; $i++) 
+      for ($j = 0; $j < $n; $j++) 
+      {   
+         $a[$i][$j] = $x++; 
+      }   
+ 
+      echo("The Given Matrix is:<br><br>");  
+      for($i = 0; $i < $m; $i++) 
+      {  
+         for($j = 0; $j < $n; $j++) 
+           echo ($a[$i][$j] . " "); 
+         echo("<br>"); 
+      } 
+ 
+      echo("<br>Sum of each column:<br><br>"); 
+      for( $i = 0; $i < $m; $i++) 
+      { 
+         $ColSum = 0; 
+         for($j = 0; $j < $n; $j++) 
+         { 
+            $ColSum = $ColSum + $a[$j][$i]; 
+         } 
+         echo("Sum of " . ($i+1) . " column: " . $ColSum); 
+         echo("<br>"); 
+      } 
+ 
+      echo("<br>Sum of each row:<br><br>"); 
+      for($i = 0; $i < $m; $i++) 
+      { 
+         $RowSum = 0; 
+         for($j = 0; $j < $n; $j++) 
+         { 
+            $RowSum = $RowSum + $a[$i][$j]; 
+         } 
+         echo("Sum of " . ($i+1) ." row: " . $RowSum); 
+         echo("<br>"); 
+      }   
+   } 
+?> 
+</body> 
+</html> 
+ 
+ 
+OUTPUT 
+ 
+ 
+ 
+ 
+ 
+ 
+PROGRAM  2 
+ 
+<html>   
+<body>   
+<h4>Finding the Sum of Prime Numbers</h4> 
+ 
+<form method="post">   
+Enter the value of n:<input type="number" name="n"><br><br>  
+<input  type="submit" name="submit" value="Sum Prime Numbers"><br><br>   
+</form>  
+  
+<?php 
+    if(isset($_POST['submit']))   
+    {   
+         $n = $_POST['n'];   
+         $primes = array(); 
+         $is_prime_no = false; 
+         for ($i = 2; $i<$n; $i++) 
+         { 
+             $is_prime_no = true;  
+             for ($j = 2; $j<=($i/2); $j++)  
+             { 
+                 if ($i%$j==0)  
+                { 
+                    $is_prime_no = false; 
+                    break; 
+                 } 
+             } 
+             if ($is_prime_no) 
+             { 
+                  array_push($primes,$i); 
+             } 
+             if (count($primes)==$n) 
+             { 
+                  break; 
+             } 
+        } 
+        $S=array_sum($primes); 
+        echo 'Sum of Prime Numbers=',$S; 
+    } 
+?> 
+</body> 
+</html> 
+ 
+ 
+OUTPUT 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+PROGRAM  3 
+ 
+<html>   
+<body>   
+<h4>Email Address Validation</h4> 
+ 
+<form method="post">   
+Enter the email address: <input type="text" name="email"><br><br>   
+<input  type="submit" name="submit" value="Check Email Address"><br><br> 
+</form>   
+ 
+<?php 
+    if(isset($_POST['submit']))   
+    {   
+        $email = $_POST['email'];   
+        if (filter_var($email, FILTER_VALIDATE_EMAIL)) 
+        { 
+            echo("$email is a valid email address"); 
+        }  
+        else  
+        { 
+            echo("$email is not a valid email address"); 
+        } 
+    } 
+?> 
+</body> 
+</html> 
+ 
+OUTPUT 
+ 
+ 
+ 
+ 
+ 
+ 
+PROGRAM  4 
+ 
+<html>   
+<body>   
+<h4>Conversion of a number written in words to digit</h4> 
+ 
+<form method="post">   
+Enter the number in words: <input type="text" name="word"><br><br>   
+<input  type="submit" name="submit" value="Convert"><br><br>   
+</form>  
+  
+<?php 
+    if(isset($_POST['submit']))   
+    {   
+        $word = $_POST['word'];   
+        echo word_digit($word)."\n"; 
+    } 
+     
+    function word_digit($word) 
+    { 
+            $warr = explode(';',$word); 
+            $result = ''; 
+             
+            foreach($warr as $value) 
+            { 
+                switch(trim($value)) 
+                { 
+                    case 'zero': 
+                        $result .= '0'; 
+                        break; 
+                    case 'one': 
+                        $result .= '1'; 
+                        break; 
+                    case 'two': 
+                        $result .= '2'; 
+                        break; 
+                    case 'three': 
+                        $result .= '3'; 
+                        break; 
+                    case 'four': 
+                        $result .= '4'; 
+                        break; 
+                    case 'five': 
+                        $result .= '5'; 
+                        break; 
+                    case 'six': 
+                        $result .= '6'; 
+                        break; 
+                    case 'seven': 
+                       $result .= '7'; 
+                       break; 
+                    case 'eight': 
+                       $result .= '8'; 
+                       break; 
+                    case 'nine': 
+                       $result .= '9'; 
+                       break;     
+          } 
+      } 
+      return $result; 
+ } 
+?> 
+</body> 
+</html> 
+ 
+ 
+OUTPUT 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+PROGRAM   5 
+<html> 
+<body> 
+<h3>PAUSING PROGRAM EXECUTION FOR GIVEN SECONDS</h3> 
+<form method="post"> 
+Select the Number of Seconds to Delay: <input type="number" name="sec" min="0" 
+max="60"><br><br> 
+<input type="submit" name="sub" value="SUBMIT"> 
+</form><br><br> 
+<?php 
+echo "Before Sleeping: ".date('h:i:s:a')."<br>" ; 
+if(isset($_POST['sub'])) 
+{ 
+$r = $_POST['sec']; 
+sleep($r); 
+echo "\n After Sleeping: ".date('h:i:s:a')."<br><br>"; 
+echo "The Program Execution Delayed for $r seconds"; 
+} 
+?> 
+</body>  
+</html> 
+OUTPUT 
+PROGRAM  6 
+<html> 
+<body> 
+<h3>CHANGING THE COLOUR OF FIRST LETTER OF EACH WORD</h3> 
+<form method="post"> 
+TYPE YOUR TEXT IN THE TEXTBOX: <input type="text" name="comment"><br><br> 
+<input type="submit" name="sub" value="SUBMIT"> 
+</form> 
+<?php 
+error_reporting(1); 
+if(isset($_POST['sub'])) 
+{ 
+$text = $_POST['comment']; 
+$text = preg_replace('/(\b[a-z])/i','<span style="color:red;">\1</span>', $text); 
+echo "<br><br> <b>OUTPUT: </b>".$text; 
+} 
+?> 
+</body> 
+</html> 
+OUTPUT 
+PROGRAM  7 
+ 
+<html> 
+<body> 
+<h2> MULTIPLICATION TABLE </h2> 
+ 
+<form method="post"> 
+ENTER THE NUMBER (RANGE: 1-100) FOR WHICH THE TABLE TO BE GENERATED:<br><br> 
+ <input type="number" name="num" max="100" min="1"><br><br> 
+ 
+ENTER THE LOWER LIMIT(RANGE: 1-20):<br><br> 
+ <input type="number" name="lowlim" max="20" min="1"><br><br> 
+     
+<input type="submit" name="sub"><br><br> 
+</form> 
+ 
+<h2>OUTPUT:</h2> 
+     
+<?php 
+    if(isset($_POST['sub'])) 
+   { 
+       $n=$_POST['num']; 
+       $low=$_POST['lowlim']; 
+       for($i=1;$i<=$low;$i++) 
+      { 
+           echo "<br> ".$n." * ".$i."= ".$n*$i; 
+       }   
+   } 
+?> 
+</body> 
+</html> 
+ 
+OUTPUT 
+ 
+ 
+PROGRAM  8 
+<html> 
+<body> 
+<h3>FACTORIAL OF A GIVEN NUMBER</h3> 
+<form method="post"> 
+ENTER THE NUMBER (RANGE 1-20): <input type="number" name="num" max="20" 
+min="1"><br><br> 
+<input type="submit" name="sub"><br><br> 
+</form> 
+<h3>OUTPUT:</h3><br> 
+<?php 
+if(isset($_POST['sub'])) 
+{ 
+$n=$_POST['num']; 
+for($i=1,$f=1;$i<=$n;$i++) 
+{ 
+$f=$f*$i;  
+} 
+echo "FACTORIAL OF ".$n." IS: ".$f; 
+} 
+?> 
+</body> 
+</html> 
+OUTPUT 
+PROGRAM  9 
+<html> 
+<body> 
+<h3>READING A FILE, REVERSING ITS CONTENT AND WRITING IN NEW FILE</h3><br><br> 
+<form method="post">   
+<input type="submit" name="sub"><br><br> 
+</form> 
+<?php 
+$fp =fopen('file1.txt','r'); 
+$fp2=fopen('file2.txt','w'); 
+$file = file('file1.txt'); 
+$read_rev = array_reverse($file); 
+if(isset($_POST['sub'])) 
+{ 
+foreach ($read_rev as $dis_line)  
+{ 
+fwrite($fp2, print_r($dis_line, true)); 
+} 
+echo "<br>FILE CONTENT SUCCESSFULLY COPIED TO NEW FILE !"; 
+} 
+else 
+{ 
+echo "<br>CLICK THE SUBMIT BUTTON TO EXECUTE"; 
+} 
+fclose($fp); 
+fclose($fp2); 
+?> 
+</body> 
+</html> 
+OUTPUT 
+ 
+ 
+ 
+ 
+ 
+                                   
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+PROGRAM  10      
+<html> 
+<body> 
+<h2>RENAMING FILES WITH .txt TO .xtx EXTENSION IN CURRENT DIRECTORY</h2><br><br> 
+<form method="post"> 
+<input type="submit" name="sub"><br><br> 
+</form> 
+<?php 
+if(isset($_POST['sub'])) 
+{ 
+$dirpath = getcwd(); 
+$dir= $dirpath."\*.txt"; 
+$files = array(); 
+$files = glob($dir); 
+foreach($files as $f) 
+{ 
+echo "<br> <b>BEFORE: </b>".$f; 
+$newfile= substr($f, 0, -4); 
+$newfile = $newfile.'.'.'xtx'; 
+echo "<br> <b>AFTER: </b>".$newfile.'<br>'; 
+rename($f,$newfile); 
+} 
+echo "<br>Successfully Renamed !"; 
+} 
+else 
+{ 
+echo "<br>CLICK THE SUBMIT BUTTON TO EXECUTE"; 
+} 
+?> 
+</body> 
+</html>    
+OUTPUT 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+PROGRAM  11 
+<html> 
+<body>   
+<h4>File List Sorted by Last Modification Time</h4> 
+<?php 
+$dirpath = getcwd(); 
+$dirpath .= "\*.*"; 
+$files = array(); 
+$files = glob($dirpath); 
+usort($files, function($x, $y)  
+{ 
+return filemtime($x) < filemtime($y); 
+}); 
+foreach($files as $item) 
+{ 
+echo basename($item) . " => Last Modified On " . @date('F d, Y, H:i:s', filemtime($item)) . 
+"<br/>"; 
+} 
+?> 
+</body> 
+</html> 
+OUTPUT 
+PROGRAM  13 
+ 
+XML CODING 
+ 
+<?xml version = "1.0"?> 
+<Email_Address> 
+   <Email Id="1"> 
+      <Email_Addr>rajideekshithat@gmail.com</Email_Addr> 
+      <Name>R. Rajeswari</Name> 
+   </Email> 
+ 
+   <Email Id="2"> 
+      <Email_Addr>pranesh@gmail.com</Email_Addr> 
+      <Name>G. Pranesh</Name>  
+   </Email> 
+ 
+   <Email Id="3"> 
+      <Email_Addr>pavithra@gmail.com</Email_Addr> 
+      <Name>RK. Pavithra</Name>  
+   </Email> 
+ 
+   <Email Id="4"> 
+      <Email_Addr>ssaranya1206189@gmail.com</Email_Addr> 
+      <Name>Saranya Senthil</Name>  
+   </Email> 
+ 
+   <Email Id="5"> 
+      <Email_Addr>dharshini@gmail.com</Email_Addr> 
+      <Name>Dharshini Malathy. K</Name>  
+   </Email> 
+</Email_Address> 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+PHP PROGRAM 
+<html> 
+<body>  
+<h4>Email Addresses</h4> 
+<?php 
+$xml = simplexml_load_file('email.xml') or die ("Unable to load XML!"); 
+foreach ($xml->Email as $Email)  
+{ 
+echo $Email->Email_Addr . "<br>"; 
+} 
+?> 
+</body> 
+</html> 
+OUTPUT 
+PROGRAM  14 
+XML CODING 
+<?xml version='1.0'?> 
+<tree> 
+<person type="grandpa" /> 
+<person type="grandma" /> 
+<children> 
+<person type="papa" /> 
+<person type="mama" /> 
+<children> 
+<person type="brother"> 
+<name>John</name> 
+</person> 
+<person type="sister"> 
+<name>Jane</name> 
+</person> 
+</children> 
+</children> 
+</tree> 
+PHP PROGRAM 
+<html>   
+<body>   
+<h3>Methods to retrieve the text value 'John' from a XML document using the DOM:</h3> 
+<?php 
+$doc = new DOMDocument(); 
+$doc->preserveWhiteSpace = false; 
+$doc->load('tree.xml'); 
+echo $doc->firstChild->childNodes->item(2)->childNodes->item(2)->childNodes->item(0)
+>childNodes->item(0)->childNodes->item(0)->nodeValue; 
+echo "<br><br>"; 
+echo $doc->getElementsByTagName('name')->item(0)->nodeValue; 
+echo "<br><br>"; 
+echo $doc->getElementsByTagName('person')->item(4)->childNodes->item(0)->nodeValue; 
+echo "<br><br>"; 
+?> 
+</body> 
+</html>   
