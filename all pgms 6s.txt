@@ -1,0 +1,740 @@
+Chi square test 
+data <- matrix(c(10,20,30,40), nrow=2)
+
+test <- chisq.test(data)
+
+print(test)
+
+# Residuals
+print(test$residuals)
+
+
+Multiple env 
+e1 <- new.env()
+e2 <- new.env()
+
+e1$x <- 10
+e2$x <- 20
+
+print(e1$x)
+print(e2$x)
+
+rm(e1)
+gc()
+1. Flatten a Nested List
+flatten_list <- function(lst) {
+  return(unlist(lst))
+}
+
+nested_list <- list(1, list(2, 3), list(list(4, 5)))
+flattened <- flatten_list(nested_list)
+
+print(flattened)
+
+2. Data Frame → JSON → Read Back
+library(jsonlite)
+
+df <- data.frame(name = c("A", "B"), age = c(20, 25))
+
+# Write to JSON
+write_json(df, "data.json")
+
+# Read from JSON
+df_new <- read_json("data.json", simplifyVector = TRUE)
+
+print(df_new)
+
+3. SQLite Database + Query
+library(DBI)
+library(RSQLite)
+
+# Create DB
+con <- dbConnect(SQLite(), "test.db")
+
+df <- data.frame(id=1:10, marks=c(50,60,70,80,90,55,65,75,85,95))
+
+# Write table
+dbWriteTable(con, "students", df, overwrite=TRUE)
+
+# Query top 5 based on calculated column (marks*2)
+result <- dbGetQuery(con, "
+  SELECT *, marks*2 AS total
+  FROM students
+  ORDER BY total DESC
+  LIMIT 5
+")
+
+print(result)
+dbDisconnect(con)
+
+4. Age Calculation + Age Groups
+df <- data.frame(
+  name=c("A","B","C"),
+  dob=as.Date(c("2005-01-01","1998-05-10","1985-08-20"))
+)
+
+df$age <- as.numeric(difftime(Sys.Date(), df$dob, units="days"))/365
+
+df$group <- cut(df$age,
+                breaks=c(0,18,35,60,100),
+                labels=c("0-18","19-35","36-60","60+"))
+
+print(df)
+
+
+
+EX NO :   2                            Reading and Writing data
+
+ 
+
+PROGRAM
+
+library(readxl)
+
+data<-read_excel("~/Sanjana BCA III/MARKS.xlsx")
+
+print(data)
+
+library(writexl)
+
+write_xlsx(data,"~/Sanjana BCA III/MARKS.xlsx")
+
+print("sucessfully written")
+
+EX NO :   3                                       R in Database
+
+ 
+
+PROGRAM:
+
+library(DBI)
+
+library(RSQLite)
+
+con <- dbConnect(RSQLite::SQLite(), "example.db")
+
+dbExecute(con, "
+
+  CREATE TABLE IF NOT EXISTS students1 (
+
+    id INTEGER PRIMARY KEY,
+
+    name TEXT,
+
+    marks INTEGER
+
+  )
+
+")
+
+dbExecute(con, "
+
+  INSERT INTO students1 (name, marks)
+
+  VALUES
+
+    ('SANJU', 87),
+
+    ('ANU', 90),
+
+    ('SURYAN', 78)
+
+")
+
+dbExecute(con, "
+
+  UPDATE students1 SET marks=95 WHERE name = 'SANJU'
+
+")
+
+dbExecute(con, "
+
+  DELETE FROM students1 WHERE name = 'SURYAN'
+
+")
+
+students1 <- dbGetQuery(con, "SELECT * FROM students1")
+
+print(students1)
+
+
+
+EX NO :   4                                             Dates
+
+ 
+
+PROGRAM:
+
+#current date
+
+today<-Sys.Date()
+
+print("today's date")
+
+print(today)
+
+#create a date from string
+
+dob<-as.Date("20000515",format="%Y%m%d")
+
+print("date of birth")
+
+print(dob)
+
+#format date+
+
+formatted_date<-format(today,"%B%d,%y")
+
+print("formatted todays date")
+
+print(formatted_date)./                                         
+
+#extract date components
+
+year<-format(dob,"%Y")
+
+month<-format(dob,"%m")
+
+day<-format(dob,"%d")
+
+print(paste("year:",year))
+
+print(paste("month:",month))
+
+print(paste("day:",day))
+
+#date difference
+
+age_days<-today-dob
+
+print("age in days:")
+
+print(age_days)
+
+#current time
+
+now<-Sys.time()
+
+print("current DAte and time:")
+
+print(now)
+
+ 
+
+EX NO :   5                                            Factors
+
+ 
+
+PROGRAM:
+
+gender <- c("male","female","female","male","female","male","male")
+
+gender_factor <- factor(gender, levels = c("male", "female"))
+
+print("Gender Factor:")
+
+print(gender_factor)
+
+print("levels of gender factor:")
+
+print(levels(gender_factor))
+
+print("number of levels:")
+
+print(nlevels(gender_factor))
+
+gender_factor_ordered <- factor(gender, levels = c("female", "male"))
+
+print("ordered gender factor:")
+
+print(gender_factor_ordered)
+
+print("summary of gender factor:")
+
+print(summary(gender_factor))
+
+
+
+
+
+EX NO :   6                                       Subscribing
+
+ 
+
+PROGRAM:
+
+vec <- c(10, 20, 30, 40, 50) 
+
+cat("Element at 3rd position:", vec[3], "\n") 
+
+cat("Elements > 25:", vec[vec > 25], "\n")
+
+ 
+
+mat <- matrix(1:9, nrow=3) 
+
+cat("Element at row 2, col 3:", mat[2, 3], "\n") 
+
+cat("First row:", mat[1, ], "\n")
+
+ 
+
+mylist <- list(name="sanju", age=25, scores=c(88, 91, 85)) 
+
+cat("Access by name:", mylist$name, "\n") 
+
+cat("Second score:", mylist$scores[2], "\n")
+
+ 
+
+df <- data.frame(ID=1:4, Name=c("sanju", "mansi", "surya", "viji"), Marks=c(75, 82, 91, 64)) 
+
+cat("Name of 3rd student:", df$Name[3], "\n") 
+
+cat("Students with Marks > 80:\n") 
+
+print(df[df$Marks > 80, ])
+
+
+
+EX NO :   7                             Character Manipulation
+
+ 
+
+PROGRAM:
+
+ 
+
+str1 <- " Hello"
+
+str2 <- "World "
+
+cat("Concatenated (paste):", paste(str1, str2), "\n")
+
+cat("Concatenated (paste0):", paste0(str1, str2), "\n")
+
+cat("Uppercase:", toupper(str1), "\n")
+
+cat("Lowercase:", tolower(str2), "\n")
+
+cat("Substring from str1 (2 to 5):", substr(str1, 2, 5), "\n")
+
+sentence <- "Data Science is amazing!"
+
+cat("Original sentence:", sentence, "\n")
+
+cat("After replacement:", gsub("amazing", "powerful", sentence), "\n")
+
+cat("Trimmed str1:", trimws(str1), "\n")
+
+cat("Trimmed str2:", trimws(str2), "\n")
+
+text <- "The quick brown fox jumps over the lazy dog"; pattern <- "fox"
+
+cat("Is pattern 'fox' present?:", grepl(pattern, text), "\n")
+
+
+
+EX NO :   8                                Data Aggregation
+
+ 
+
+PROGRAM:
+
+data<- data.frame(
+
+  Dept=c("IT","IT","HR","HR","sales"),
+
+  salary=c(50000,60000,40000,42000,45000)
+
+)
+
+sum_result<-aggregate(salary~Dept,data,mean)
+
+result<-aggregate(salary~Dept,data,mean)
+
+count_result<-aggregate(salary~Dept,data,length)
+
+print(sum_result)
+
+print(result)
+
+print(count_result)
+
+
+
+EX NO :   9                                Reshaping Data Basics
+
+ 
+
+PROGRAM:
+
+wide_data <- data.frame(
+
+  Student = c("Alice", "Bob", "Charlie"),
+
+  Math_2023 = c(90, 85, 92), Science_2023 = c(88, 89, 95),
+
+  Math_2024 = c(93, 87, 94), Science_2024 = c(91, 90, 96)
+
+)
+
+long_data <- reshape(wide_data, direction = "long", varying = 2:5, sep = "_", idvar ="Student")
+
+wide_restored <- reshape(long_data, direction = "wide", timevar = "time", idvar = "Student")
+
+
+
+EX NO :   10                             The R Environment
+
+ 
+
+PROGRAM:
+
+student_data <- data.frame(
+
+  Name = c("A", "B", "C"),
+
+  Marks = c(80, 75, 90)
+
+)
+
+print(student_data)
+
+ls()
+
+rm(student_data)
+
+ls()
+
+print("current working Directory:")
+
+ 
+
+EX NO :   12                     Descriptive Statistics And Graphics
+
+ 
+
+PROGRAM:
+
+data<-c(23,45,56,45,33,89,76,54,67,45)
+
+mean(data)
+
+median(data)
+
+sd(data)
+
+var(data)
+
+summary(data)
+
+hist(data,col="green",main="histogram")
+
+boxplot(data,col="orange",main="boxplot")
+
+plot(data,type="o",col="red",main="lineplot")
+
+
+
+EX NO :   13                     One and Two Sample Tests
+
+ 
+
+PROGRAM:
+
+data<- c (25,27,30,22,24,29,28)
+
+t.test(data,mu=26)
+
+group1<-c(21,22,23,20,24)
+
+group2<-c(25,27,26,28,30)
+
+t.test(group1,group2)
+
+before<-c(120,115,123,119)
+
+after<-c(110,112,118,113)
+
+t.test(before,after,paired=TRUE)
+
+ 
+
+EX NO :   14                     Regression and Correlation
+
+ 
+
+PROGRAM:
+
+x<-c(1,2,3,4,5)
+
+y<-c(2,4,5,4,5)
+
+cor(x,y)
+
+model<-lm(y~x)
+
+summary(model)
+
+plot(x,y)
+
+abline(model,col="red")
+
+
+
+EX NO :   16                                    Tabular Data
+
+ 
+
+PROGRAM:
+
+students<-data.frame(
+
+Rollno=c(101,102,103,104),
+
+Name=c("A","B","C","D"),
+
+Math=c(85,90,78,92),science=c(88,76,85,95),English=c(82,89,80,88)
+
+)
+
+print("student marksheet:")
+
+print(students)
+
+
+
+EX NO :   15         Analysis of variance and the Kruskal-Wallis test
+
+ 
+
+PROGRAM:
+
+group_A <- c(10, 12, 14)
+
+group_B <- c(15, 17, 19)
+
+group_C <- c(20, 22, 24)
+
+data <- data.frame(
+
+  score = c(group_A, group_B, group_C),
+
+  group = factor(rep(c("A", "B", "C"), each = 3))
+
+)
+
+anova_result <- aov(score ~ group, data = data)
+
+summary(anova_result)
+
+kruskal.test(score ~ group, data = data)
+
+
+
+EX NO :  18                           Advance Data Handling
+
+ 
+
+PROGRAM:
+
+ 
+
+data <- data.frame(
+
+  name = c("A", "B", "C", "D", "E"),
+
+  department = c("IT", "HR", "IT", "HR", "finance"),
+
+  salary = c(60000, 50000, 65000, 48000, 70000)
+
+)
+
+sorted_data <- data[order(-data$salary), ]
+
+print("Sorted by salary (descending):")
+
+print(sorted_data)
+
+high_salary <- data[data$salary > 60000, ]
+
+print("Employees with high salary:")
+
+print(high_salary)
+
+dept_avg <- aggregate(salary ~ department, data = data, FUN = mean)
+
+print("Average salary by department:")
+
+print(dept_avg)
+
+ 
+
+EX NO :  19                              Multiple Regression
+
+ 
+
+PROGRAM:
+
+x1<-c(10,20,30,40,50)
+
+x2<-c(12,25,35,45,55)
+
+data<-data.frame(y,x1,x2)
+
+model<-lm(y~x1+x2,data=data)
+
+summary(model)
+
+
+
+EX NO : 20                                     Linear models
+
+ 
+
+PROGRAM:
+
+x<-c(1,2,3,4,5)
+
+y<-c(2,4,6,8,10)
+
+model<-lm(y~x)
+
+summary(model)
+
+ 
+
+EX NO : 21                               Logistics Regression
+
+ 
+
+PROGRAM:
+
+score<-c(45,55,65,75,85)
+
+pass<-c(0,0,1,1,1)
+
+model<-glm(pass~score,family=binomial)
+
+summary(model)
+
+ 
+
+EX NO : 22                               Survival  Analysis
+
+ 
+
+PROGRAM:
+
+library(survival)
+
+time <- c(5, 10, 15, 20, 25)
+
+status <- c(1, 1, 0, 1, 0)  # 1 = event occurred, 0 = censored
+
+surv_obj <- Surv(time, status)
+
+fit <- survfit(surv_obj ~ 1)
+
+summary(fit)
+
+plot(fit)
+
+
+
+EX NO : 23                          Rates and Poison Regression
+
+ 
+
+PROGRAM:
+
+count<-c(2,3,4,5,7)
+
+exposure<-c(1,2,3,4,5)
+
+model<-glm(count~exposure,family=poisson)
+
+summary(model)
+
+
+
+EX NO : 24                          Non-Linear Curve Fitting
+
+ 
+
+PROGRAM:
+
+x<-1:5
+
+y<-c(2.5,4.1,7.3,12.5,20.1)
+
+nls_model<-nls(y~a*exp(b*x),start=list(a=1,b=0.5))
+
+summary(nls_model)
+
+EX NO : 4C                           Aggregate Data set by Week  
+
+ 
+
+PROGRAM :
+
+ 
+
+library(dplyr)
+
+library(lubridate)
+
+sales_data <- data.frame(
+
+  date = as.Date(c(
+
+    "2024-02-02","2024-03-03",
+
+    "2024-04-04","2024-05-05",
+
+    "2024-06-06","2024-07-07"
+
+  )),
+
+  sales = c(120,180,200,250,300,350)
+
+)
+
+sales_data
+
+weekly_sales <- sales_data %>%
+
+  mutate(week = floor_date(date, "week")) %>%
+
+  group_by(week) %>%
+
+  summarize(total_sales = sum(sales))
+
+weekly_sales
+
+ 
+
+EX NO : 25                 One Way Anova With Tukey HSD Model
+
+ 
+
+ 
+
+PROGRAM:
+
+ 
+
+method <- factor(rep(c("A", "B", "C"), each=5))
+
+marks <- c(80,85,78,90,88, # method A
+70,75,72,68,74, # method B
+88,92,85,91,89) # method C
+
+data <- data.frame(method, marks)
+
+anova_model <- aov(marks ~ method, data = data)
+
+summary(anova_model)
+
+TukeyHSD(anova_model)
